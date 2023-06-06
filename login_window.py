@@ -39,21 +39,24 @@ def create_login_window(sock, login_window, return_window):
     
     
     def send_password():
-        account = in1.get()
-        password = in2.get()
-        user_data = (account, password)
-        if len(account)!=0 and len(password)!=0:
-            sock.send(str(user_data).encode("utf-8"))
-            check_result = sock.recv(1024).decode("utf-8")
-            if check_result == "correct password":
-                print(check_result)#!!!
-            elif check_result=="error password" or check_result=="no account":
-                messagebox.showwarning("warning !", "Warning, if you enter the wrong password three times,\n you will be disconnected by the server !!!")
-            elif check_result=="881":
-                messagebox.showerror("Error !", "You have been disconnected by the server !!!")
-                login_window.destroy()
-        else:
-            messagebox.showerror("Error !", "no input !!!")
+        try:
+            account = in1.get()
+            password = in2.get()
+            user_data = (account, password)
+            if len(account)!=0 and len(password)!=0:
+                sock.send(str(user_data).encode("utf-8"))
+                check_result = sock.recv(1024).decode("utf-8")
+                if check_result == "correct password":
+                    print(check_result)#!!!
+                elif check_result=="error password" or check_result=="no account":
+                    messagebox.showwarning("warning !", "Warning, if you enter the wrong password three times,\n you will be disconnected by the server !!!")
+                elif check_result=="881":
+                    messagebox.showerror("Error !", "You have been disconnected by the server !!!")
+                    login_window.destroy()
+            else:
+                messagebox.showerror("Error !", "no input !!!")
+        except ConnectionResetError:
+            messagebox.showerror("Error !", "Error, can not connect !!!")
 
 
 
