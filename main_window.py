@@ -4,7 +4,7 @@ import threading
 from tkinter import *
 from tkinter import messagebox
 import time
-from login_window import create_login_window
+from other_window.login_window import create_login_window
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
