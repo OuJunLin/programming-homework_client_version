@@ -4,7 +4,7 @@ import threading
 from tkinter import *
 from tkinter import messagebox
 import time
-from other_window.login_window import create_login_window
+from login_window import create_login_window
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -41,8 +41,8 @@ def check_destory(check_window, check_window_title, pre_window):
             time.sleep(0.1)
             check_window.title(check_window_title)
         except TclError:
-            pre_window.destroy()
             s.send("00000".encode("utf-8"))
+            pre_window.destroy()
             break
             
 
