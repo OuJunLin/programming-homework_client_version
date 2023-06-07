@@ -4,11 +4,11 @@ import threading
 from tkinter import *
 from tkinter import messagebox
 import time
+from create_account_window import create_create_account_window
 
 
 
-
-def create_login_window(sock, login_window, return_window):
+def create_login_window(sock, login_window):
     login_window.title("login")
     login_window.geometry("400x250+750+400")
     for i in range(4):
@@ -35,6 +35,17 @@ def create_login_window(sock, login_window, return_window):
 
     fr1 = Frame(login_window)
     fr1.grid(row=3, column=0, columnspan=3, sticky=N+S+W+E)
+
+
+
+    def check_destory(check_window, check_window_title, pre_window):
+        while True:
+            try:
+                time.sleep(0.1)
+                check_window.title(check_window_title)
+            except TclError:
+                pre_window.deiconify()
+                break
     
     
     
@@ -48,6 +59,7 @@ def create_login_window(sock, login_window, return_window):
                 check_result = sock.recv(1024).decode("utf-8")
                 if check_result == "correct password":
                     print(check_result)#!!!
+                    messagebox.showinfo("login", "login successfully !!!")
                 elif check_result=="error password" or check_result=="no account":
                     messagebox.showwarning("warning !", "Warning, if you enter the wrong password three times,\n you will be disconnected by the server !!!")
                 elif check_result=="881":
@@ -59,13 +71,24 @@ def create_login_window(sock, login_window, return_window):
                 messagebox.showerror("Error !", "no input !!!")
         except ConnectionResetError:
             messagebox.showerror("Error !", "Error, can not connect !!!")
-
-
+    
+    
+    
+    def create_new_account():
+        create_account_window = Toplevel(login_window)
+        create_create_account_window(sock, create_account_window)
+        in1.delete(0, END)
+        in2.delete(0, END)
+        login_window.withdraw()
+        tc = threading.Thread(target=check_destory, args=(create_account_window, "create account", login_window), daemon=True)
+        tc.start()
+        
+        
 
     btn1 = Button(fr1, text="login", height=2, bg="#ffffff", command=send_password)
     btn1.pack(side="right", padx=20)
 
-    btn2 = Button(fr1, text="create\naccount", bg="#ffffff")
+    btn2 = Button(fr1, text="create\naccount", bg="#ffffff", command=create_new_account)
     btn2.pack(side="right", padx=20)
 
 

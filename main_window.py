@@ -48,7 +48,6 @@ def check_destory(check_window, check_window_title, pre_window):
 
 
 def connect():
-    global login_window1
     ip = in1.get()
     port = in2.get()
     if len(ip)!=0 and len(port)!=0:
@@ -60,7 +59,7 @@ def connect():
             if correctCode == "10000":
                 print("connect!!")
                 login_window = Toplevel(input_window)
-                create_login_window(s, login_window, input_window)
+                create_login_window(s, login_window)
                 input_window.withdraw()
                 tc = threading.Thread(target=check_destory, args=(login_window, "login", input_window), daemon=True)
                 tc.start()
