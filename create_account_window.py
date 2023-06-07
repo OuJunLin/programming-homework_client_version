@@ -46,8 +46,6 @@ def create_create_account_window(sock, create_account_window):
             check_result_nc = sock.recv(1024).decode("utf-8")
             if check_result_nc == "alreadly create new account":
                 messagebox.showinfo("create !", "the new account is alreadly created!!!")
-                clearIn1.delete(0,'end')
-                clearIn2.delete(0,'end')
                 create_account_window.destroy()
             elif check_result_nc == "same account in db":
                 messagebox.showwarning("Warning !", "Warning, there is the same account in database !!!")

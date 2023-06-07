@@ -59,7 +59,7 @@ def create_login_window(sock, login_window):
                 check_result = sock.recv(1024).decode("utf-8")
                 if check_result == "correct password":
                     print(check_result)#!!!
-                    messagebox.showinfo("login", "login successfully !!!")
+                    messagebox.showinfo("login", "login successfully ^_^")
                 elif check_result=="error password" or check_result=="no account":
                     messagebox.showwarning("warning !", "Warning, if you enter the wrong password three times,\n you will be disconnected by the server !!!")
                 elif check_result=="881":
