@@ -80,6 +80,7 @@ btn1.pack()
 
 
 input_window.mainloop()
+print("main_window done!")
 s.close()
 
 

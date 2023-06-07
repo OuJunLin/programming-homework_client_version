@@ -53,6 +53,8 @@ def create_login_window(sock, login_window, return_window):
                 elif check_result=="881":
                     messagebox.showerror("Error !", "You have been disconnected by the server !!!")
                     login_window.destroy()
+                elif check_result == "alreadly connect":
+                    messagebox.showwarning("warning !", "Warning, yuor account is connected !!!")
             else:
                 messagebox.showerror("Error !", "no input !!!")
         except ConnectionResetError:
