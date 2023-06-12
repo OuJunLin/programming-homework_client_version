@@ -5,6 +5,7 @@ from tkinter import *
 from tkinter import messagebox
 import time
 from other_window.create_account_window import create_create_account_window
+from other_window.main_window2 import create_main_window
 
 
 
@@ -46,6 +47,17 @@ def create_login_window(sock, login_window):
             except TclError:
                 pre_window.deiconify()
                 break
+
+
+
+    def check_destory2(check_window, check_window_title, pre_window):
+        while True:
+            try:
+                time.sleep(0.1)
+                check_window.title(check_window_title)
+            except TclError:
+                pre_window.destroy()
+                break
     
     
     
@@ -58,8 +70,12 @@ def create_login_window(sock, login_window):
                 sock.send(str(user_data).encode("utf-8"))
                 check_result = sock.recv(1024).decode("utf-8")
                 if check_result == "correct password":
-                    print(check_result)#!!!
-                    messagebox.showinfo("login", "login successfully ^_^")
+                    print(check_result)
+                    main_window = Toplevel(login_window)
+                    create_main_window(sock, main_window)
+                    login_window.withdraw()
+                    tc2 = threading.Thread(target=check_destory2, args=(main_window, "main_window", login_window), daemon=True)
+                    tc2.start()
                 elif check_result=="error password" or check_result=="no account":
                     messagebox.showwarning("warning !", "Warning, if you enter the wrong password three times,\n you will be disconnected by the server !!!")
                 elif check_result=="881":
